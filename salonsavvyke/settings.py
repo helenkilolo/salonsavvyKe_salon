@@ -84,12 +84,12 @@ WSGI_APPLICATION = 'salonsavvyke.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ndunge_db',
-        'USER': 'ndunge',
-        'PASSWORD': 'mypassword',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'root',
+        'PASSWORD': 'ytnnB6Z1P4EABtUS',
+        'HOST': 'postgresql-rds-blank-banana-eu0w.c7ykg0oymd6u.us-west-2.rds.amazonaws.com',
+        'PORT': 5432
     }
 }
 
@@ -138,7 +138,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-LOGIN_URL = 'login'
+LOGIN_URL = 'core:login'
 
 
 # Default primary key field type

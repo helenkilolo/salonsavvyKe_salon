@@ -28,6 +28,7 @@ def appointment(request):
 
 def user_login(request):
     if request.method == 'POST':
+        print(request.POST)
         username = request.POST['username']
         password = request.POST['password']
 
