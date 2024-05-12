@@ -8,7 +8,6 @@
     <title>Signup</title>
     <link rel="stylesheet" href="{% static 'styles/signup.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -27,13 +26,15 @@
         <div class="form-container">
 
             <!-- Signup form -->
-            <form class="form" action="" method="POST">
+            <form class="form" id="signup-form" action="" method="POST">
                 {% csrf_token %}
 
-                {% if error_message %}
-                    <div class="error-message">
-                        <h2>{{ error_message }}</h2>
-                    </div>
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
                 {% endif %}
 
                 <h2 class="form-title">Signup</h2>
@@ -49,7 +50,10 @@
 
                 <div>
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter your password..." class="form-input">
+                    <div class="password-field">
+                        <input type="password" id="password" name="password" placeholder="Enter your password..." class="form-input">
+                        <i class="far fa-eye" id="togglePassword"></i>
+                    </div>
                 </div>
 
                 <div>
@@ -58,7 +62,36 @@
                 </div>
                 <button type="submit" class="form-button">Signup</button>
             </form>
+            
+            <p>Already have an account? <a href="{% url 'core:login' %}">Login</a></p>
 
+            <script>
+                document.getElementById('signup-form').addEventListener('submit', function(event) {
+                    // Get form elements
+                    var username = document.getElementById('username').value;
+                    var email = document.getElementById('email').value;
+                    var password = document.getElementById('password').value;
+                    var repeatPassword = document.getElementById('repeatPassword').value;
+            
+                    // Perform validation
+                    if (!username || !email || !password || !repeatPassword) {
+                        alert('All fields are required');
+                        event.preventDefault(); // Prevent form submission
+                    } else if (password !== repeatPassword) {
+                        alert('Passwords do not match');
+                        event.preventDefault(); // Prevent form submission
+                    }
+                });
+
+                // Toggle password visibility
+                const togglePassword = document.querySelector('#togglePassword');
+                const password = document.querySelector('#password');
+                togglePassword.addEventListener('click', function() {
+                    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                    password.setAttribute('type', type);
+                    this.classList.toggle('fa-eye-slash');
+                });
+            </script>
         </div>
     </div>
 </body>

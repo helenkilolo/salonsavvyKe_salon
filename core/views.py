@@ -10,11 +10,11 @@ from .forms import AppointmentForm
 from django.contrib import messages
 
 # Create your views here.
-@login_required
+
 def index(request):
     return render(request, 'index.html')
 
-
+@login_required(login_url='login')
 def appointment(request):
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
@@ -54,6 +54,8 @@ def user_signup(request):
                 user = User.objects.create_user(username, email, password)
                 user.save()
                 login(request, user)
+                # Send a welcome message to the user
+                messages.success(request, f"Welcome, {username}!")
                 return redirect('/')
             except:
                 error_message = 'Error creating account'
@@ -64,6 +66,7 @@ def user_signup(request):
         
     return render(request, 'signup.html')
 
+@login_required(login_url='login')
 def user_logout(request):
     logout(request)
     return redirect('/')

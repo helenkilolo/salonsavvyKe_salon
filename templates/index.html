@@ -9,7 +9,6 @@
     <title>SalonSavvyKE</title>
     <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -402,6 +401,13 @@
     <div class="theme-btn">
         <i class="fas fa-adjust"></i>
     </div>
+    {% if user.is_authenticated %}
+        <!-- Display user welcome message and logout button -->
+        <div class="user-welcome">
+            <p>Welcome, {{ user.username }}</p>
+            <a href="{% url 'core:logout' %}">Logout</a>
+        </div>
+    {% else %}
     <div class="login-btn">
         <a href="{% url 'core:login' %}" class="main-btn">
             <span class="btn-text">login</span>
@@ -414,6 +420,7 @@
             <span class="btn-icon"><i class="fas fa-user-plus"></i></span>
         </a>
     </div>
+    {% endif %}
     <script src="{% static 'scripts/app.js' %}"></script>
 </body>
 </html>

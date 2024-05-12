@@ -143,6 +143,41 @@ section {
     }
 }
 
+.user-welcome {
+    position: fixed;
+    top: 5%;
+    right: 3%;
+    width: 180px;
+    height: 70px;
+    font-size: 20px;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    color: #333333; /* Update with your desired color */
+}
+
+.user-welcome p {
+    margin-right: 30px;
+    text-decoration: none;
+    color: #333333;; /* Update with your desired color */
+    font-weight: bold;
+    margin-right: 30px;
+    right: 10%;
+    width: 180px;
+}
+
+.user-welcome a {
+    text-decoration: none;
+    color: #27AE60; /* Update with your desired color */
+    font-weight: bold;
+    margin-right: 30px;
+    right: 10%;
+}
+
+.user-welcome a:hover {
+    text-decoration: underline;
+}
+
 .login-btn {
     top: 5%;
     right: 3%;

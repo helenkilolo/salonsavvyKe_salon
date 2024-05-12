@@ -151,3 +151,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Django's default authentication backend
+    # Add any additional authentication backends here if needed
+]
