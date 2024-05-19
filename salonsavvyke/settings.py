@@ -16,26 +16,22 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=ddb5tt!q*d!7g%2__41c_e&i920l$r$knu5lm0axdddu*%w1g'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-=ddb5tt!q*d!7g%2__41c_e&i920l$r$knu5lm0axdddu*%w1g')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get('DJANGO_DEBUG', False)
 
-ALLOWED_HOSTS = [ 'localhost', '127.0.0.1',
-                 'www.salonsavvyke.buzz', 'salonsavvyke.buzz' ]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'www.salonsavvyke.buzz', 'salonsavvyke.buzz']
 
-CSFR_TRUSTED_ORIGINS = [ 'https://*.onrender.com',
-                      'https://*.salonsavvyke.buzz/', 'https://salonsavvyke.buzz/' ]
+CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com', 'https://*.salonsavvyke.buzz', 'https://salonsavvyke.buzz']
 
-INTERNAL_IPS = (
+INTERNAL_IPS = [
     '127.0.0.1',
-    'localhost:8000'
-)
+]
 
 # Application definition
 
@@ -46,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core'
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -64,7 +60,7 @@ ROOT_URLCONF = 'salonsavvyke.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR, 'templates'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,28 +75,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'salonsavvyke.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': BASE_DIR / 'db.sqlite3',
-#    }
-#}
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'root',
-        'PASSWORD': 'ytnnB6Z1P4EABtUS',
-        'HOST': 'postgresql-rds-blank-banana-eu0w.c7ykg0oymd6u.us-west-2.rds.amazonaws.com',
-        'PORT': 5432
+        'NAME': os.environ.get('DB_NAME', 'postgres'),
+        'USER': os.environ.get('DB_USER', 'root'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'ytnnB6Z1P4EABtUS'),
+        'HOST': os.environ.get('DB_HOST', 'postgresql-rds-blank-banana-eu0w.c7ykg0oymd6u.us-west-2.rds.amazonaws.com'),
+        'PORT': os.environ.get('DB_PORT', 5432),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -120,7 +107,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -132,35 +118,30 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    BASE_DIR / 'static',
 ]
 
-LOGIN_URL = 'core:login'
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
+# Security settings
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
+# Authentication backends
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Django's default authentication backend
-    # Add any additional authentication backends here if needed
 ]
