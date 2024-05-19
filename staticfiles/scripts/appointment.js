@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
             event.preventDefault(); // Prevent the default behavior of the anchor tag
             
             // Redirect the user to the appointment page
-            window.location.href = "{% url 'appointment' %}";
+            window.location.href = "{% url 'core:appointment' %}";
         });
     }
 });

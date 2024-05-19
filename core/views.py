@@ -27,6 +27,8 @@ def appointment(request):
             form.save()
             messages.success(request, 'Appointment booked successfully!')
             return redirect('appointment_list')  # Redirect to the appointment list page or another appropriate page
+        else:
+            messages.error(request, 'Failed to book appointment. Please correct the errors.')
     else:
         form = AppointmentForm()
 
