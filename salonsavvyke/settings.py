@@ -32,7 +32,10 @@ ALLOWED_HOSTS = [ 'localhost', '127.0.0.1',
 CSFR_TRUSTED_ORIGINS = [ 'https://*.onrender.com',
                       'https://*.salonsavvyke.buzz', 'https://salonsavvyke.buzz' ]
 
-
+INTERNAL_IPS = (
+    '127.0.0.1',
+    'localhost:8000'
+)
 
 # Application definition
 
