@@ -24,13 +24,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=ddb5tt!q*d!7g%2__41c_e&i920l$r$knu5lm0axdddu*%w1g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+if environment == 'development':
+    DEBUG = True
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = [ 'localhost', '127.0.0.1',
                  'www.salonsavvyke.buzz', 'salonsavvyke.buzz' ]
 
 CSFR_TRUSTED_ORIGINS = [ 'https://*.onrender.com',
-                      'https://*.salonsavvyke.buzz', 'https://salonsavvyke.buzz' ]
+                      'https://*.salonsavvyke.buzz/', 'https://salonsavvyke.buzz/' ]
 
 INTERNAL_IPS = (
     '127.0.0.1',
