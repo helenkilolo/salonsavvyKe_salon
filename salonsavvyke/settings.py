@@ -29,8 +29,10 @@ DEBUG = False
 ALLOWED_HOSTS = [ 'localhost', '127.0.0.1',
                  'www.salonsavvyke.buzz', 'salonsavvyke.buzz' ]
 
-CSFR_TRUSTED_ORIGIN = [ 'https://*.onrender.com',
+CSFR_TRUSTED_ORIGINS = [ 'https://*.onrender.com',
                       'https://*.salonsavvyke.buzz', 'https://salonsavvyke.buzz' ]
+
+
 
 # Application definition
 
