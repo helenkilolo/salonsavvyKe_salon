@@ -15,12 +15,18 @@ def index(request):
     return render(request, 'index.html')
 
 @login_required(login_url='login')
+def appointment_list(request):
+    appointments = Appointment.objects.all()
+    return render(request, 'appointment_list.html', {'appointments': appointments})
+
+@login_required(login_url='login')
 def appointment(request):
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/')  # Redirect to the homepage or another appropriate page
+            messages.success(request, 'Appointment booked successfully!')
+            return redirect('appointment_list')  # Redirect to the appointment list page or another appropriate page
     else:
         form = AppointmentForm()
 

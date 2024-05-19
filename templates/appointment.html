@@ -25,7 +25,7 @@
         <div class="form-container">
 
             <!-- Appointment form -->
-            <form class="form" action="" method="POST">
+            <form class="form" action="{% url 'core:appointment' %}" method="POST">
                 {% csrf_token %}
 
                 {% if error_message %}

@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment List</title>
+    <link rel="stylesheet" href="{% static 'styles/appointmentlist.css' %}">
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div>
+            <h1 class="logo">Salon Savvy Ke</h1>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="main-content">
+        <h2 class="title">Appointments List</h2>
+        <table class="table-auto w-full">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">Date & Time</th>
+                    <th class="px-4 py-2">Customer Name</th>
+                    <th class="px-4 py-2">Service Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                    <tr>
+                        <td class="border px-4 py-2">{{ appointment.date_time }}</td>
+                        <td class="border px-4 py-2">{{ appointment.customer_name }}</td>
+                        <td class="border px-4 py-2">{{ appointment.service_type }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
