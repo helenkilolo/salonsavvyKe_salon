@@ -44,3 +44,8 @@ document.querySelector('#bookingForm').addEventListener('submit', function(event
         alert('An error occurred while booking the appointment.');
     });
 });
+
+// Function to check if the user is logged in
+function isUserLoggedIn() {
+    return localStorage.getItem('authToken') !== null;
+}
