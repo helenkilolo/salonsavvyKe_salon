@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from .models import Appointment
+from datetime import datetime  # Import datetime
+from django.utils.timezone import make_aware
 import os
 from django.conf import settings
 from .forms import AppointmentForm
@@ -22,16 +24,29 @@ def appointment_list(request):
 @login_required(login_url='login')
 def appointment(request):
     if request.method == 'POST':
+        date = request.POST.get('date')
+        start_time = request.POST.get('start_time')
+        customer_name = request.POST.get('customer_name')
+        service_type = request.POST.get('service_type')
+
+        if date and start_time:
+            date_time_str = f"{date} {start_time}"
+            try:
+                date_time = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M')
+                date_time = make_aware(date_time)  # Make datetime aware
+                appointment = Appointment(date_time=date_time, customer_name=customer_name, service_type=service_type)
+                appointment.save()
+                messages.success(request, 'Appointment booked successfully!')
+                return redirect('core:appointment_list')  # Ensure the correct namespace is used
+            except ValueError as e:
+                messages.error(request, 'Invalid date or time format.')
+
         form = AppointmentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Appointment booked successfully!')
-            return redirect('appointment_list')  # Redirect to the appointment list page or another appropriate page
-        else:
-            messages.error(request, 'Failed to book appointment. Please correct the errors.')
+        print("Form is invalid:", form.errors)
+        messages.error(request, 'Failed to book appointment. Please correct the errors.')
     else:
         form = AppointmentForm()
-
+    
     return render(request, 'appointment.html', {'form': form})
 
 def user_login(request):
